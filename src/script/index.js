@@ -1,7 +1,6 @@
 'use strict';
 
 const fmsService    = require( '../../lib/').default;
-const hooks         = require('./hooks');
 
 /**
  * custom service with only internal only
@@ -22,9 +21,8 @@ class Service {
    */
   run(scriptName, data){
     const requestData = {
-       payload : JSON.stringify(data),
-      '-script' : scriptName,
-      'scriptName' : scriptName
+       params : JSON.stringify(data),
+      '-script' : scriptName
     };
 
     return this.transactor.create(requestData).then((result)=>{
@@ -54,7 +52,7 @@ export default function(options){
 
     const model = {
       layout : options.layout,
-      idField : 'id'
+      idField : options.idField,
     };
 
 
@@ -68,8 +66,7 @@ export default function(options){
     app.use( utilityPath, RestUtility);
 
     const RestUtilityService = app.service(utilityPath);
-    // hooks will disable all but internal access
-    RestUtilityService.before(hooks.before);
+
 
 
     const scriptServicePath = baseServicePath + '-script';
@@ -79,8 +76,7 @@ export default function(options){
 
 
     const ScriptService = app.service(scriptServicePath);
-    // hooks will disable all but internal access
-    ScriptService.before(hooks.before);
+
 
   };
 }
