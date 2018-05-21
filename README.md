@@ -12,7 +12,7 @@ This currently passes all but two tests in the feathers-service-test suite. Ther
 ## Install
 
 ```bash
-npm install feathers-filemaker --save
+npm install feathers-filemaker-bmangus --save
 ```
 ## Documentation
 
@@ -62,8 +62,15 @@ PLEASE NOTE: This portion of the repository differs from the master branch. Plea
 
 ```javascript
 //import the module and service
+const feathers = require('@feathersjs/feathers');
+const express = require('@feathersjs/express');
 var fms = require('feathers-filemaker');
 var script = fms.ScriptService;
+
+// Creates an Express compatible Feathers application (for endpoint example below)
+const app = express(feathers());
+
+app.configure(express.rest());
 
 //Begin Script Service
 //---configure the script service
@@ -88,42 +95,54 @@ app.use('/run/:urlParam',
 ## Complete Example
 
 ```javascript
-var feathers = require('feathers');
-var fms = require('feathers-filemaker');
-var bodyParser = require('body-parser');
-var rest = require('feathers-rest');
-var socketio = require('feathers-socketio');
-var mms = require('feathers-memory');
+const feathers = require('@feathersjs/feathers');
+const express = require('@feathersjs/express');
+var fms = require('feathers-filemaker-bmangus');
+const memory = require('feathers-memory');
+var script = fms.ScriptService;
 
-// Create a feathers instance.
-const app = feathers()
-  // Enable REST services
-  .configure(rest())
-  // Enable Socket.io services
-  .configure(socketio())
-  // Turn on JSON parser for REST services
-  .use(bodyParser.json())
-  // Turn on URL-encoded parser for REST services
-  .use(bodyParser.urlencoded({ extended: true }));
+// Creates an Express compatible Feathers application
+const app = express(feathers());
 
-// create a FileMaker Service based on the Contacts Layout in the Contacts db
-// paginate options can also be set here
-app.use('/contacts', fms({
-  connection :{
-    host : 'localhost',
-    db : 'Contacts'
-    user : 'admin'
-    pass : 'pass'
-  },
+app.configure(express.rest());
+
+//DB connection
+const connection = {
+  host : 'fms.somewhere.com',
+  db : 'someFile',
+  user : 'someUser',
+  pass : 'somePassword',
+};
+
+//Parse json string into usable response
+
+var parseJSON = (data) => {
+  return JSON.parse(data.result);
+}
+
+
+//example endpoint 1
+app.use('/classifications', fms({
+  connection,
   model :{
-    layout : 'Contacts'
-    idField : 'id'
+    layout : 'classifications_web',
+    idField : 'recordID',
   },
   paginate: {
     default: 2,
-    max: 4
+    max: 4,
   }
 }));
+
+//example endpoint 2
+app.use('/class_list', fms({
+    connection,
+    model:{
+        layout: 'class_list_web',
+        idField: 'recordID',
+    }
+}));
+
 
 
 // Start the server.
