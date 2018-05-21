@@ -1,8 +1,8 @@
 {
-  "name": "feathers-filemaker",
+  "name": "feathers-filemaker-bmangus",
   "description": "Filemaker adapter for feathers.js",
   "version": "0.6.1",
-  "homepage": "https://github.com/geistinteractive/feathers-filemaker",
+  "homepage": "https://github.com/bmangus/feathers-filemaker",
   "main": "lib/",
   "keywords": [
     "FileMaker",
@@ -12,7 +12,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/geistinteractive/feathers-filemaker.git"
+    "url": "git://github.com/bmangus/feathers-filemaker.git"
   },
   "author": {
     "name": "Todd Geist",
@@ -21,9 +21,10 @@
   },
   "contributors": [
     "todd@geistinteractive.com"
+    "b.mangus@me.com"
   ],
   "bugs": {
-    "url": "https://github.com/geistinteractive/feathers-filemaker/issues"
+    "url": "https://github.com/bmangus/feathers-filemaker/issues"
   },
   "engines": {
     "node": ">= 0.12.0"

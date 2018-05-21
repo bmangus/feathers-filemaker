@@ -56,23 +56,32 @@ The Service will return JSON as it normally does from the last layout it is on. 
 
 This is great for running transactions scripts!
 
+PLEASE NOTE: This portion of the repository differs from the master branch. Please read the following documentation carefully.
+
 #### Using the Script Service
 
 ```javascript
+//import the module and service
 var fms = require('feathers-filemaker');
 var script = fms.ScriptService;
 
-// we configure a ScriptService, we need a connection, and a layout.
-app.configure(script({connection, layout: 'Utility'}));
+//Begin Script Service
+//---configure the script service
+app.configure(script({connection, layout: 'fm_web_layout', idField: 'recordID'}));
 
-//...
+//---get the service
+const ScriptService = app.service('fms-someFile-someLayout-script');
 
-// now later, anywhere we have access to the 'app' we can get the service.
-// assuming connection to have a db named 'Test' and our layout was 'Utility'
-const ScriptService = app.service('fms-Test-Utility-script');
+//---setup endpoint to run the service (using standard express routing)
+app.use('/run/:urlParam',
+   (req, res, next) => { 
+     return ScriptService.run('someScript', {param: req.params.urlParam})
+      .then((data) => { 
+        res.send(parseJSON(data)) })
+      .catch("error"); }
+);
 
-// and use it like this.
-ScriptService.run('ScriptName' , {any:'data', I: 'want'} ).then(handleResults)
+//End Script Service
 ```
 
 
