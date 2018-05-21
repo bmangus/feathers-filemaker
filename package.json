@@ -20,7 +20,7 @@
     "url": "https://geistinteractive.com"
   },
   "contributors": [
-    "todd@geistinteractive.com"
+    "todd@geistinteractive.com",
     "b.mangus@me.com"
   ],
   "bugs": {
@@ -45,12 +45,15 @@
     "lib": "lib"
   },
   "dependencies": {
+    "@feathersjs/express": "^1.2.2",
+    "@feathersjs/feathers": "^3.1.5",
     "basic-auth": "^1.0.4",
     "debug": "^2.2.0",
     "feathers": "^2.0.1",
     "feathers-commons": "^0.7.1",
     "feathers-errors": "^2.0.1",
     "feathers-hooks": "^1.5.2",
+    "feathers-memory": "^2.1.1",
     "feathers-query-filters": "^1.1.1",
     "is": "^3.1.0",
     "joi": "^8.0.5",
