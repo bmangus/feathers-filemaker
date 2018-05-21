@@ -253,4 +253,6 @@ module.exports = app;
 
 Copyright Todd Geist(c) 2016
 
+Modified Brian Mangus 2018
+
 Licensed under the [MIT license](LICENSE)
